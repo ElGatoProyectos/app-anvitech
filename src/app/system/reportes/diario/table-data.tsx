@@ -402,6 +402,29 @@ function TableData() {
     fetchIncidentsForDetail();
   }, [openModalEdit, actionActive]);
 
+  // restaturacion de data
+
+  const [openRestore, setOpenRestore] = useState(false);
+  const [dateSelectedRestore, setDateSelectedRestore] = useState("");
+
+  async function handleRestoreData() {
+    try {
+      setLoading(true);
+      const response = await post(
+        "reports/restore/day",
+        { dateSelectedRestore },
+        session.data
+      );
+      useToastDefault("Ok", "Reporte restaurado correctamente");
+      setOpenmodalReportDay(false);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setOpenmodalReportDay(false);
+      useToastDestructive("Error", "Error al restaurar reporte");
+    }
+  }
+
   return (
     <div>
       <div className=" flex flex-col ">
@@ -507,6 +530,16 @@ function TableData() {
                 Reporte por trabajador
               </Button>
             </div>
+            <div className="flex gap-4">
+              <Button
+                type="button"
+                className="mt-0"
+                onClick={() => setOpenRestore(true)}
+              >
+                Restaurar reporte
+                <FileSpreadsheet className="ml-2" size={20} />
+              </Button>
+            </div>
           </div>
           {/*  */}
         </div>
@@ -524,7 +557,6 @@ function TableData() {
                 <th className="py-3 pr-6">Tardanza</th>
                 <th className="py-3 pr-6">Falta</th>
                 <th className="py-3 pr-6">Descuento</th>
-
                 <th className="py-3 pr-6">Acción</th>
               </tr>
             </thead>
@@ -745,6 +777,29 @@ function TableData() {
           </ModalContent>
         </Modal>
       </div>
+
+      <Dialog open={openRestore} onOpenChange={() => setOpenRestore(false)}>
+        <DialogContent className="sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Aviso de sistema</DialogTitle>
+          </DialogHeader>
+          {/* Contenido personalizado del modal */}
+          <div className="overflow-y-hidden flex flex-col gap-4">
+            <span>
+              Esta opcion restaurara toda la informacion del dia seleccionado,
+              recuerde que toda la modificacion que se haya realizado se
+              restaurara
+            </span>
+            <div className="p-2 flex flex-col gap-4">
+              <Input
+                type="date"
+                onChange={(e) => setDateSelectedRestore(e.target.value)}
+              ></Input>
+              <Button onClick={handleRestoreData}>Restaurar</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Dialog
         open={openModalAlert}

@@ -133,6 +133,8 @@ function UpdateDataWorker({ id }: { id: string }) {
 
   const formatDateToInputNull = (date: Date | null) => {
     if (!date) return "";
+
+    console.log(date)
     const isoString = new Date(date).toISOString();
     return isoString.split("T")[0];
   };

@@ -1,4 +1,4 @@
-const dev = false;
+const dev = true;
 export const base_backend = dev
   ? "http://localhost:4000"
   : "http://161.132.48.124:4000";

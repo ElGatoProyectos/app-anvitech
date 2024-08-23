@@ -1,3 +1,4 @@
+import { base_backend } from "@/context/environment";
 import { authService } from "@/lib/core/service/auth.service";
 import { userService } from "@/lib/core/service/user.service";
 import axios from "axios";
@@ -12,10 +13,7 @@ export async function authenticate(data: {
 
   // console.log(response);
   try {
-    const response: any = await axios.post(
-      "http://localhost:4000/api/auth",
-      data
-    );
+    const response: any = await axios.post(`${base_backend}/api/auth`, data);
 
     const user = {
       id: response.data.id,
