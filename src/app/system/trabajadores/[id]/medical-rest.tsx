@@ -168,13 +168,14 @@ function MedicalRestWorker({ id }: { id: string }) {
             {dataPermissionMin.map((item, idx) => (
               <tr className="border-y " key={idx}>
                 <td>
-                  {formatDate(item.start_date)} a {formatDate(item.end_date)}
+                  {item.start_date.split("T")[0]} a{" "}
+                  {item.end_date.split("T")[0]}
                 </td>
                 <td>
                   {calculateDateDifference(item.start_date, item.end_date) + 1}
                 </td>
-                <td>{formatDate(item.start_date)}</td>
-                <td>{formatDate(item.end_date)}</td>
+                <td>{item.start_date.split("T")[0]}</td>
+                <td>{item.end_date.split("T")[0]}</td>
               </tr>
             ))}
           </tbody>
@@ -270,8 +271,8 @@ function MedicalRestWorker({ id }: { id: string }) {
                   {dataPermissionAll.map((item, idx) => (
                     <tr className="border-y " key={idx}>
                       <td>
-                        {formatDate(item.start_date)} a{" "}
-                        {formatDate(item.end_date)}
+                        {item.start_date.split("T")[0]} a{" "}
+                        {item.end_date.split("T")[0]}
                       </td>
                       <td>
                         {calculateDateDifference(
@@ -279,8 +280,8 @@ function MedicalRestWorker({ id }: { id: string }) {
                           item.end_date
                         ) + 1}
                       </td>
-                      <td>{formatDate(item.start_date)}</td>
-                      <td>{formatDate(item.end_date)}</td>
+                      <td>{item.start_date.split("T")[0]}</td>
+                      <td>{item.end_date.split("T")[0]}</td>
                       <td>
                         <Trash
                           onClick={() => handleSelectRow(item, "delete")}
